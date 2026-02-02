@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>LEGENDARY VALENTINE MODE 💖</title>
+    <title>Will You Be My Valentine? 💖</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -15,9 +15,11 @@
         }
 
         h1 {
-            margin-top: 100px;
+            margin-top: 80px;
             font-size: 40px;
             color: #ff3366;
+            z-index: 5;
+            position: relative;
         }
 
         .btn {
@@ -27,33 +29,35 @@
             border-radius: 10px;
             cursor: pointer;
             position: absolute;
+            z-index: 5;
         }
 
         #yesBtn {
             background-color: #ff4d88;
             color: white;
             left: 45%;
-            top: 250px;
+            top: 220px;
         }
 
         #noBtn {
             background-color: #999;
             color: white;
             left: 55%;
-            top: 250px;
+            top: 220px;
         }
 
         .cat {
             position: absolute;
-            width: 160px;
+            width: 140px;
             z-index: 1;
             animation: float 4s ease-in-out infinite,
-                       rotate 6s linear infinite;
+                       rotate 8s linear infinite;
+            opacity: 0.9;
         }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-30px); }
+            50% { transform: translateY(-25px); }
             100% { transform: translateY(0px); }
         }
 
@@ -67,18 +71,22 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 650px;
-            z-index: 3;
+            max-width: 90vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            z-index: 10;
             display: none;
             border-radius: 15px;
             box-shadow: 0 0 40px rgba(0,0,0,0.4);
+            background: black;
         }
 
         .heart {
             position: fixed;
             top: -50px;
-            font-size: 30px;
-            animation: fall 5s linear infinite;
+            font-size: 28px;
+            animation: fall linear infinite;
             z-index: 2;
         }
 
@@ -88,17 +96,6 @@
             }
         }
 
-        .shake {
-            animation: shake 0.5s infinite;
-        }
-
-        @keyframes shake {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(5px, -5px); }
-            50% { transform: translate(-5px, 5px); }
-            75% { transform: translate(5px, 5px); }
-            100% { transform: translate(-5px, -5px); }
-        }
     </style>
 </head>
 <body>
@@ -108,21 +105,15 @@
 <button id="yesBtn" class="btn">Yes 💖</button>
 <button id="noBtn" class="btn">No 😢</button>
 
-<video id="mainVideo" autoplay loop muted>
+<video id="mainVideo" loop controls>
     <source src="WhatsApp Video 2026-02-02 at 1.01.44 PM.mp4" type="video/mp4">
 </video>
-
-<!-- Romantic Music -->
-<audio id="loveMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const mainVideo = document.getElementById("mainVideo");
-const music = document.getElementById("loveMusic");
 
 // Make NO button run away
 noBtn.addEventListener("mouseover", function() {
@@ -132,34 +123,33 @@ noBtn.addEventListener("mouseover", function() {
     noBtn.style.top = y + "px";
 });
 
-// YES button chaos mode
+// YES button celebration
 yesBtn.addEventListener("click", function() {
 
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
+
     mainVideo.style.display = "block";
+    mainVideo.play(); // 🔥 enables audio
 
-    music.play();
+    // Confetti burst
+    confetti({
+        particleCount: 300,
+        spread: 200,
+        origin: { y: 0.6 }
+    });
 
-    document.body.classList.add("shake");
-
-    // Flashing pink background
-    setInterval(() => {
-        document.body.style.backgroundColor =
-            document.body.style.backgroundColor === "pink" ? "#ffe6f0" : "pink";
-    }, 300);
-
-    // Massive confetti
+    // Continuous confetti
     setInterval(() => {
         confetti({
-            particleCount: 150,
-            spread: 200,
+            particleCount: 100,
+            spread: 160,
             origin: {
                 x: Math.random(),
                 y: Math.random() - 0.2
             }
         });
-    }, 1200);
+    }, 2000);
 
     const catGifs = [
         "giphy.webp",
@@ -169,7 +159,7 @@ yesBtn.addEventListener("click", function() {
         "giphy 5.webp"
     ];
 
-    // Add 50 rotating floating cats
+    // Add 50 cats randomly
     for (let i = 0; i < 50; i++) {
         let cat = document.createElement("img");
         cat.src = catGifs[Math.floor(Math.random() * catGifs.length)];
