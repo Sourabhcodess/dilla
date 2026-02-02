@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Be My Valentine? 💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6f0;
+            margin-top: 100px;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 40px;
+            color: #ff3366;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px;
+            transition: 0.2s;
+            position: absolute;
+        }
+
+        #yesBtn {
+            background-color: #ff4d88;
+            color: white;
+            left: 45%;
+            top: 250px;
+        }
+
+        #noBtn {
+            background-color: #999;
+            color: white;
+            left: 55%;
+            top: 250px;
+        }
+
+        #gif {
+            margin-top: 50px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will You Be My Valentine? 💘</h1>
+
+    <button id="yesBtn" class="btn">Yes 💖</button>
+    <button id="noBtn" class="btn">No 😢</button>
+
+    <div id="gif">
+        <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" width="300">
+    </div>
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+
+        noBtn.addEventListener("mouseover", function() {
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+        });
+
+        document.getElementById("yesBtn").addEventListener("click", function() {
+            document.getElementById("gif").style.display = "block";
+        });
+    </script>
+
+</body>
+</html>
