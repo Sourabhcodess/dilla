@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>What the Hell, what the helly, what the hellyante!!!!</title>
+    <title>LEGENDARY VALENTINE MODE 💖</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -11,6 +11,7 @@
             text-align: center;
             background-color: #ffe6f0;
             overflow: hidden;
+            transition: background-color 0.3s;
         }
 
         h1 {
@@ -44,8 +45,21 @@
 
         .cat {
             position: absolute;
-            width: 100px; /* small cats */
+            width: 160px;
             z-index: 1;
+            animation: float 4s ease-in-out infinite,
+                       rotate 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes rotate {
+            0% { rotate: 0deg; }
+            100% { rotate: 360deg; }
         }
 
         #mainVideo {
@@ -53,10 +67,37 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px; /* bigger than gifs */
+            width: 650px;
             z-index: 3;
             display: none;
             border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.4);
+        }
+
+        .heart {
+            position: fixed;
+            top: -50px;
+            font-size: 30px;
+            animation: fall 5s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(5px, -5px); }
+            50% { transform: translate(-5px, 5px); }
+            75% { transform: translate(5px, 5px); }
+            100% { transform: translate(-5px, -5px); }
         }
     </style>
 </head>
@@ -67,40 +108,59 @@
 <button id="yesBtn" class="btn">Yes 💖</button>
 <button id="noBtn" class="btn">No 😢</button>
 
-<video id="mainVideo" autoplay loop>
+<video id="mainVideo" autoplay loop muted>
     <source src="WhatsApp Video 2026-02-02 at 1.01.44 PM.mp4" type="video/mp4">
 </video>
+
+<!-- Romantic Music -->
+<audio id="loveMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const mainVideo = document.getElementById("mainVideo");
+const music = document.getElementById("loveMusic");
 
 // Make NO button run away
 noBtn.addEventListener("mouseover", function() {
-    const x = Math.random() * (window.innerWidth - 150);
+    const x = Math.random() * (window.innerWidth - 200);
     const y = Math.random() * (window.innerHeight - 100);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 });
 
-// YES button celebration
+// YES button chaos mode
 yesBtn.addEventListener("click", function() {
 
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
-
     mainVideo.style.display = "block";
 
-    // 🎉 Confetti blast
-    confetti({
-        particleCount: 300,
-        spread: 200,
-        origin: { y: 0.6 }
-    });
+    music.play();
 
-    // Your uploaded webp gifs
+    document.body.classList.add("shake");
+
+    // Flashing pink background
+    setInterval(() => {
+        document.body.style.backgroundColor =
+            document.body.style.backgroundColor === "pink" ? "#ffe6f0" : "pink";
+    }, 300);
+
+    // Massive confetti
+    setInterval(() => {
+        confetti({
+            particleCount: 150,
+            spread: 200,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2
+            }
+        });
+    }, 1200);
+
     const catGifs = [
         "giphy.webp",
         "giphy 2.webp",
@@ -109,8 +169,8 @@ yesBtn.addEventListener("click", function() {
         "giphy 5.webp"
     ];
 
-    // Add MANY small cats everywhere
-    for (let i = 0; i < 25; i++) {
+    // Add 50 rotating floating cats
+    for (let i = 0; i < 50; i++) {
         let cat = document.createElement("img");
         cat.src = catGifs[Math.floor(Math.random() * catGifs.length)];
         cat.className = "cat";
@@ -119,17 +179,19 @@ yesBtn.addEventListener("click", function() {
         document.body.appendChild(cat);
     }
 
-    // Continuous confetti
+    // Hearts raining
     setInterval(() => {
-        confetti({
-            particleCount: 80,
-            spread: 120,
-            origin: {
-                x: Math.random(),
-                y: Math.random() - 0.2
-            }
-        });
-    }, 2000);
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }, 300);
 
 });
 
